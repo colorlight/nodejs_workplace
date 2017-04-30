@@ -19,8 +19,11 @@ var router = function(request,response){
             return;
         }
         /*if callback exist , it is jsonp*/
-        var callbackName = '';
-        if(callbackName = url.match(/callback=([^&]*)/)[1]){
+        
+        // if(callbackName = url.match(/callback=([^&]*)/)[1]){
+         var callbackNameArray  = url.match(/callback=([^&]+)/);
+        if(callbackNameArray && callbackNameArray.length > 1){ 
+             var callbackName = callbackNameArray[1];
              response.writeHead(200,{'Content-Type':'text/javascript'});
              response.end(callbackName + '({mypeniusinch: \'10cm\', mygirlsboos:\'Dcup\'},{password:584693})');
              return;
