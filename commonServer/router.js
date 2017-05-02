@@ -5,7 +5,7 @@ var genData = require('./genData');
 var router = function(request,response){
     var charset='utf-8',
         indexHtml = 'index.html',
-        basePath = '/home/lighting/webTech/GitPrj/ife_pratice/pratice22',
+        basePath = '/home/lighting/webTech/GitPrj/ife_pratice',
         url = request.url;
         method = request.method;
 
