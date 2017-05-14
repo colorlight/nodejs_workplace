@@ -1,21 +1,23 @@
-'use strict'
 var http = require('http');
 
+//The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
 var options = {
-    host: '172.24.53.223',
-    port: 8081,
-    path: '/',
-    method: 'GET'
+  host: 'www.baidu.com',
+  path: '/'
 };
 
-console.log(options)
-var req = http.request(options, function(res){
-    console.log('Status:' + res.statusCode);
-    console.log('HEADERS ' + JSON.stringify(res.headers));
+callback = function(response) {
+  var str = '';
 
-    res.setEncoding('utf8');
-    res.on('data', function(chunk){
-        console.log(chunk);
-    })
-})
+  //another chunk of data has been recieved, so append it to `str`
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
 
+  //the whole response has been recieved, so we just print it out here
+  response.on('end', function () {
+    console.log(str);
+  });
+}
+
+http.request(options, callback).end();
