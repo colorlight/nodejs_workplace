@@ -8,12 +8,19 @@ var router = require('./router');
 var options = {
     key: fs.readFileSync('/home/lighting/nodejs/httpsCA/214090097510805.key'),
     cert: fs.readFileSync('/home/lighting/nodejs/httpsCA/214090097510805.pem')
-}
+};
 
 
+(function hahas(){
+    console.log(23)
+})();
+
+
+var a = 1;
 
 var server = https.createServer(options,function(request,response){
     console.log(request.method + ':' + request.url);   
+    console.log(a);
     router(request,response);
 })
 
