@@ -47,12 +47,11 @@ app.use(controller());
 
 /*https ca config file */ 
 var options = {
-    key: fs.readFileSync('/home/lighting/nodejs/httpsCA/214090097510805.key'),
-    cert: fs.readFileSync('/home/lighting/nodejs/httpsCA/214090097510805.pem')
+    key: fs.readFileSync('/root/https_ca/214090097510805.key'),
+    cert: fs.readFileSync('/root/https_ca/214090097510805.pem')
 }
 
 
 https.createServer( options, app.callback()).listen(443);
-
 
 console.log('app started at port 443');
