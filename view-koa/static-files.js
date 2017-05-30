@@ -9,6 +9,8 @@ function staticFiles(url, dir) {
             let fp = path.join(dir, rpath.substring(url.length));
             if (await fs.exists(fp)) {
                 ctx.response.type = mime.lookup(rpath);
+              //  ctx.response.setHeader("Cache-Control: max-age =" + 10*365*24*60*60*1000);
+                ctx.set('Cache-Control', 'max-age=' +  10*365*24*60*60*1000);
                 ctx.response.body = await fs.readFile(fp);
             } else {
                 ctx.response.status = 404;

@@ -65,6 +65,16 @@ a{
 	color: white;
 	margin-right: 10px;	
 	margin-top: 4px;
+
+}
+
+#item-btn:hover{
+	color: gray;
+}
+
+#item-btn{
+	text-decoration: none;	
+	transition: all 1s;
 }
 
 .social-block{
