@@ -28,10 +28,13 @@ a{
 .mobile-bar{
 	display: block;
 	position: fixed;
-	width: 100%;
 	z-index: 10000;
 	top: 0px;
 	height: 35px;
+	left: 0px;
+	/*width: 100%;*/
+	/*box-sizing: border-box;*/
+	right: 0px;
 	background: rgba(51,51,51,0.98);
 }
 
