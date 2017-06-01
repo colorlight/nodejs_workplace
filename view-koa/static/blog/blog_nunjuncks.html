@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="../fonts/iconfont/iconfont.css">
 	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" media=(max-width:800px) href="../css/mobile.css">
-	 <link rel="stylesheet" href="css/blog_nunjucks.css"> 
+	 <link rel="stylesheet" href="../css/blog_nunjucks.css"> 
 </head>
 <body>
 
@@ -132,11 +132,193 @@
 		</div>
 	</header>
 	
-	 
 
-<article>
-	<h2>Nujucks模板引擎的使用</h2>
-</article>
+	<div class="content-wrapper">
+		
+		<div class="content-wrapper_inner">
+			 
+<div class="post-content">
+		<article>
+			<header class="post-header">
+				<div class="post-meta">
+					<time datetime="2017年04月10日" class="post_meta_time date">2017年04月10日</time>
+				</div>
+				<h1 class="post-title">Nujucks模板引擎的使用</h1>
+				<hr class="divide-hr">
+			</header>
+			<section class="post">
+				<blockquote>
+					<p>node:模板引擎</p>
+				</blockquote>
+				<h2>Nunjucks是什么</h2>
+				<p>其实他是一个模板引擎。</p>
+				<p>那什么又是模板引擎呢?</p>
+				<p>模板引擎就是基于模板配合数据构造出字符串输出的一个组件。比如下面的函数就是一个模板引擎：</p>
+				<pre><code>function examResult (data) {
+    <span class="keyword">return</span> `<span class="variable">$</span>{data.name}同学一年级期末考试语文<span class=" variable">${</span>data.chinese}分，数学<span class=" variable">${</span>data.math}分，位于年级第<span class=" variable">${</span>data.ranking}名。`
+}</code></pre>
+				<p>如果我们输入数据如下：</p>
+				<pre><code>examResult({
+    <span class=" attribute">name</span>: <span class=" string">'小明'</span>,
+    chinese: <span class=" number">78</span>,
+    math: <span class=" number">87</span>,
+    ranking: <span class=" number">999</span>
+});	</code></pre>
+				<p>该模板引擎把模板字符串里面对应的变量替换以后，就可以得到以下输出：</p>
+				<pre><code>小明同学一年级期末考试语文78分，数学87分，位于年级第999名。</code></pre>
+				<p>模板引擎最常见的输出就是输出网页，也就是HTML文本。当然，也可以输出任意格式的文本，比如Text，XML，Markdown等等</p>
+				<p>有同学要问了：既然JavaScript的模板字符串可以实现模板功能，那为什么我们还需要另外的模板引擎？</p>
+				<p>因为JavaScript的模板字符串必须写在JavaScript代码中，要想写出新浪首页这样复杂的页面，是非常困难的。</p>
+				<p>输出HTML有几个特别重要的问题需要考虑：</p>
+				<hr class="divide-hr">
+				<h2>模板引擎需要考虑的问题</h2>
+				<h3>转义</h3>
+				<p>对特殊字符要转义，避免受到XSS攻击。比如，如果变量<code class=" ">小明</code>的值不是小明，而是<code class=" ">小明&lt;script&gt;...&lt;/script&gt;</code>;，模板引擎输出的HTML到了浏览器，就会自动执行恶意JavaScript代码。</p>
+				<h3>格式化</h3>
+				<p>对不同类型的变量要格式化，比如，货币需要变成<code class=" ">12,345.00</code>这样的格式，日期需要变成<code class=" ">2016-01-01</code>这样的格式。</p>
+				<h3>简单逻辑</h3>
+				<p>模板还需要能执行一些简单逻辑，比如，要按条件输出内容，需要if实现如下输出：</p>
+				<pre><code>&#123;&#123; name  &#125;&#125;同学，
+&#123;% <span class=" keyword">if</span> score >= 90 % &#125;
+    成绩优秀，应该奖励
+&#123;% <span class=" keyword">elseif</span> score >=60 % &#125;
+    成绩良好，继续努力
+&#123;% <span class=" keyword">else</span> % &#125;
+    不及格，建议回家打屁股
+&#123;% <span class=" keyword">endif</span> % &#125;</code></pre>
+				<p>所以，我们需要一个功能强大的模板引擎，来完成页面输出的功能。</p>
+				<hr class="divide-hr">
+				<h2>node下使用Nunjucks</h2>
+				<p>我们选择Nunjucks作为模板引擎。Nunjucks是Mozilla开发的一个纯JavaScript编写的模板引擎，既可以用在Node环境下，又可以运行在浏览器端。但是，主要还是运行在Node环境下，因为浏览器端有更好的模板解决方案，例如MVVM框架。</p>
+
+				<p>如果你使用过Python的模板引擎<a class=" " href="http://jinja.pocoo.org/docs/2.9/">jinja2</a>，那么使用Nunjucks就非常简单，两者的语法几乎是一模一样的，因为Nunjucks就是用JavaScript重新实现了jinjia2。</p>
+
+				<p>从上面的例子我们可以看到，虽然模板引擎内部可能非常复杂，但是使用一个模板引擎是非常简单的，因为本质上我们只需要构造这样一个函数：</p>
+				<pre><code><span class=" keyword">function </span>" render(view, model) {
+    // TODO:...</code></pre>
+				<p>
+					其中，view是模板的名称（又称为视图），因为可能存在多个模板，需要选择其中一个。model就是数据，在JavaScript中，它就是一个简单的Object。render函数返回一个字符串，就是模板的输出。
+				</p>
+				<p>
+					下面我们来使用Nunjucks这个模板引擎来编写几个HTML模板，并且用实际数据来渲染模板并获得最终的HTML输出。
+				</p>
+				<p>
+					我们创建一个use-nunjucks的VS Code工程结构如下：
+				</p>
+				<pre><code>use-nunjucks/
+|
++- .vscode/
+|  |
+|  +- launch.json <span class=" comment"><-- VSCode 配置文件
+</span>|
++- views/
+|  |
+|  +- hello.html <span class=" comment"><-- HTML模板文件
+</span>|
++- app.js <span class=" comment"><-- 入口js
+</span>|
++- package.json <span class=" comment"><-- 项目描述文件
+</span>|
++- node_modules/ <span class=" comment"><-- npm安装的所有依赖包
+</span></code></pre>
+				<p>其中，模板文件存放在<code class=" ">views</code>目录中。</p>
+				<p>我们先在<code class=" ">package.json</code>中添加<code class=" ">nunjucks</code>的依赖：</p>
+				<pre><code>"nunjucks": "2.4.2"</code></pre>
+				<p>注意，模板引擎是可以独立使用的，并不需要依赖koa。用<code class=" ">npm install</code>安装所有依赖包。</p>
+				<p>紧接着，我们要编写使用Nunjucks的函数<code class=" ">render</code>。怎么写？方法是查看Nunjucks的<a href="http://mozilla.github.io/nunjucks/">官方文档</a>，仔细阅读后，在<code class=" ">app.js</code>中编写代码如下：</p>
+				<pre><code><span class=" keyword">const</span> nunjucks = require(&#39;<span class=" string">nunjucks</span>&#39;);
+<span class=" keyword">function</span> createEnv(path, opts) {
+    <span class=" keyword">var</span>
+        autoescape = opts.autoescape &amp;&amp; true,
+        noCache = opts.noCache || false,
+        watch = opts.watch || false,
+        throwOnUndefined = opts.throwOnUndefined || false,
+        env = <span class=" keyword">new</span> nunjucks.Environment(
+            <span class=" keyword">new</span> nunjucks.FileSystemLoader(&#39;views&#39;, {
+                noCache: noCache,
+                watch: watch,
+            }), {
+                autoescape: autoescape,
+                throwOnUndefined: throwOnUndefined
+            });
+    if (opts.filters) {
+        for (<span class=" keyword">var</span> f in opts.filters) {
+            env.addFilter(f, opts.filters[f]);
+        }
+    }
+    <span class=" keyword">return</span> env;
+}
+
+<span class=" keyword">var</span> env = createEnv(&#39;views&#39;, {
+    watch: true,
+    filters: {
+        hex: <span class=" keyword">function</span> (n) {
+            <span class=" keyword">return</span> &#39;0x&#39; + n.toString(16);
+        }
+    }
+})</code></pre>
+				<p>变量env就表示Nunjucks模板引擎对象，它有一个render(view, model)方法，正好传入view和model两个参数，并返回字符串。</p>
+				<p>创建env需要的参数可以查看文档获知。我们用autoescape = opts.autoescape && true这样的代码给每个参数加上默认值，最后使用new nunjucks.FileSystemLoader('views')创建一个文件系统加载器，从views目录读取模板。</p>
+				<p>我们编写一个hello.html模板文件，放到views目录下，内容如下：</p>
+				<pre><code>&lt;h1&gt;Hello &lt;/h1&gt;</code></pre>
+				<p>然后，我们就可以用下面的代码来渲染这个模板：</p>
+				<pre><code>var s = env.render(&#x27;hello.html&#x27;, { name: &#x27;小明&#x27; });
+console.log(s);</code></pre>
+				<p>获得输出如下：</p>
+				<pre><code>&lt;h1&gt;Hello 小明&lt;/h1&gt;</code></pre>
+				<p>咋一看，这和使用JavaScript模板字符串没啥区别嘛。不过，试试：</p>
+				<pre><code>var s = env.render(&#x27;hello.html&#x27;, { name: &#x27;&lt;script&gt;alert(&quot;小明&quot;)&lt;/script&gt;&#x27; });
+console.log(s);</code></pre>
+				<p>获得输出如下：</p>
+				<pre><code>&lt;h1&gt;Hello &amp;lt;script&amp;gt;alert(&quot;小明&quot;)&amp;lt;/script&amp;gt;&lt;/h1&gt;</code></pre>
+				<p>这样就避免了输出恶意脚本。</p>
+				<p>此外，可以使用Nunjucks提供的功能强大的tag，编写条件判断、循环等功能，例如：</p>
+				<pre><code><span>&lt;!-- 循环输出名字 --&gt;</span>
+&lt;body&gt;
+    &lt;h3&gt;Fruits List&lt;/h3&gt;
+    &#123;% for f in fruits %&#125;
+    &lt;p&gt;&lt;/p&gt;
+    &#123;% endfor %&#125;
+&lt;/body&gt;</code></pre>
+				<p>Nunjucks模板引擎最强大的功能在于模板的继承。仔细观察各种网站可以发现，网站的结构实际上是类似的，头部、尾部都是固定格式，只有中间页面部分内容不同。如果每个模板都重复头尾，一旦要修改头部或尾部，那就需要改动所有模板。</p>
+				<p>更好的方式是使用继承。先定义一个基本的网页框架base.html：</p>
+				<pre><code>&lt;html&gt;&lt;body&gt;
+&#123;% block header % &#125; &lt;h3&gt;Unnamed&lt;/h3&gt; &#123;% endblock % &#125;
+&#123;% block body % &#125; &lt;div&gt;No body&lt;/div&gt; &#123;% endblock % &#125;
+&#123;% block footer % &#125; &lt;div&gt;copyright&lt;/div&gt; &#123;% endblock % &#125;</code></pre>
+				<p>base.html定义了三个可编辑的块，分别命名为header、body和footer。子模板可以有选择地对块进行重新定义：</p>
+				<pre><code>&#123;% extends &#x27;base.html&#x27; % &#125;
+
+&#123;% block header % &#125;&lt;h1&gt;&lt;/h1&gt;&#123;% endblock % &#125;
+
+&#123;% block body % &#125;&lt;p&gt;&lt;/p&gt;&#123;% endblock % &#125;</code></pre>
+				<p>然后，我们对子模板进行渲染：</p>
+				<pre><code>console.log(env.render(&#x27;extend.html&#x27;, {
+    header: &#x27;Hello&#x27;,
+    body: &#x27;bla bla bla...&#x27;
+}));</code></pre>
+				<p>输出HTML如下：</p>
+				<pre><code>&lt;html&gt;&lt;body&gt;
+&lt;h1&gt;Hello&lt;/h1&gt;
+&lt;p&gt;bla bla bla...&lt;/p&gt;
+&lt;div&gt;copyright&lt;/div&gt; &lt;-- footer没有重定义，所以仍使用父模板的内容
+&lt;/body&gt;</code></pre>
+				<h2>参考源码</h2>
+				<a href="">colorlight</a>
+			</section>
+		</article>
+	<div class="article-nav">
+	<div class="last-article">
+		<span>上一篇文章</span>
+		<h2><a href="">shadowsocks+vultr+锐速科学上网</a></h2>
+	</div>
+	<div class="next-article">
+		<span>下一篇文章</span>
+		<h2><a href="">缓存控制</a></h2>
+	</div>
+	</div>
+</div>
+
 
 
 			<footer class="footer">
@@ -148,16 +330,13 @@
 				</span>
 			</footer>
 		</div>
-
+	
 	</div>
 
 	<script>
 		var e = document.getElementsByClassName('pannel-cover')[0];
 		window.onload = function(){
-		
-
-			setTimeout('e.classList.add(\'panel-cover-collapse\')', 10);
-			
+			setTimeout('e.classList.add(\'panel-cover-collapse\')', 10);	
 		}
 	</script>
 </body>

@@ -132,10 +132,11 @@
 		</div>
 	</header>
 	
-	{% block content %}
+
 	<div class="content-wrapper">
 		
 		<div class="content-wrapper_inner">
+			{% block content %}
 			<div class="main-post-list">
 				<ol class="post-list">
 					<li>
@@ -220,8 +221,8 @@
 				</nav>
 				<hr class="post-list-divider last-hr">
 			</div>
-
 			{% endblock%}
+
 			<footer class="footer">
 				<span class="footer-copyright">
 					&copy 2017  All rights reserved.
@@ -231,16 +232,13 @@
 				</span>
 			</footer>
 		</div>
-
+	
 	</div>
 
 	<script>
 		var e = document.getElementsByClassName('pannel-cover')[0];
 		window.onload = function(){
-		
-
-			setTimeout('e.classList.add(\'panel-cover-collapse\')', 10);
-			
+			setTimeout('e.classList.add(\'panel-cover-collapse\')', 10);	
 		}
 	</script>
 </body>

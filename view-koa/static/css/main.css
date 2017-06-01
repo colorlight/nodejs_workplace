@@ -1,5 +1,9 @@
 body{
     font-family: "Lucida Grande","Microsoft YaHei";
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #666;
 }
 
 ol li, ul li{
@@ -8,6 +12,7 @@ ol li, ul li{
 
 h1,h2,h3,h4,h5,h6{
     font-weight: lighter;
+    color: #444;
 }
 
 a{
@@ -16,6 +21,10 @@ a{
 
 hr{
     border: none;
+}
+
+p{
+    margin: 15px 0;
 }
 .pannel-cover{
 	background: url(../img/bgp.jpg) #666 center center no-repeat;
@@ -301,4 +310,59 @@ page{
 
 .mobile-bar{
     display: none;
+}
+
+.divide-hr{
+    height: 0;
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px solid #dddddd;
+}
+
+.post > blockquote{
+    padding: 10px 20px;
+    margin: 0 0 20px;
+    font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Hiragino Sans GB","Hiragino Sans GB W3","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+    font-weight: lighter;
+    font-size: 1em;
+    border-left: 3px solid #BF1827;
+}
+
+.post > blockquote p{
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7em;
+}
+
+span.keyword{
+    color: #333;
+    font-weight: bold;
+}
+
+span.string{
+    color: #d14;
+}
+
+span.tag{
+    color:#000080;
+}
+
+span.number, span.attribute, span.variable{
+    color: #008080;
+}
+
+span.comment{
+    color:#998;
+    font-style: italic;
+}
+
+:not(pre) > code{
+    font-size: 12px;
+    font-family: Consolas, monospace, serif;
+    color: #dd0055;
+    white-space: nowrap;    
+    padding: 0 4px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    background: #fafafa;
 }
