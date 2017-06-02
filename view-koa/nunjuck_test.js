@@ -39,5 +39,5 @@ var env = createEnv('views', {
 
 var s = env.render('view_nunjucks.html');
 
-fs.writeFile('static/blog/blog_nunjuncks.html',s , err => {console.log('finish write file')});
+fs.writeFile('static/blog/blog_nunjucks.html',s , err => {console.log('finish write file')});
 
