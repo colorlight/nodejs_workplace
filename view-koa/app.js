@@ -10,9 +10,17 @@ const app = new Koa();
 
 const https = require('https');
 
+const http = require('http');
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 const fs = require('fs');
+
+const enforceHttps = require('koa-sslify');
+
+
+//force https on all page
+app.use(enforceHttps());
 
 // log request URL:
 app.use(async (ctx, next) => {
@@ -51,8 +59,8 @@ var options = {
     cert: fs.readFileSync('/root/https_ca/214090097510805.pem')
 }
 
-
+http.createServer(app.callback()).listen(80);
 https.createServer( options, app.callback()).listen(443);
-app.listen(80);
+
 console.log('app started at port 443');
 console.log('app started at port 80');
