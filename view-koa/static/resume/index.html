@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>colorlight的作品</title>
+
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
+	<!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="main.css">
+    <!-- endbuild -->
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+
+    
+  </head>
+  <body>
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-tabs pull-right">
+          <li class="active">
+            <a href="/">主页</a>
+          </li>
+          <li>
+            <a  href="https://colorlight.me/static/blog/blog.html?v=01">博客</a>
+          </li>
+          <li>
+            <a href="#">作品</a>
+          </li>
+        </ul>
+        <h3 class="text-muted">作品集</h3>
+      </div>
+      
+      
+      <div class="jumbotron">
+
+        <h2>我做了什么</h2>
+        <p>下面是我做的一些小玩意</p>
+        
+      </div>
+
+      <section>
+        <ol class="catlog-list">
+          
+        </ol>
+      </section>
+	  <script src="jquery.min.js"></script>
+      <script>
+        var data = [
+             [
+                { title : '表单常用代码'},
+                { url : 'contentfolder/chapter1/chapter1-1.html', title : '去除字符串左右的空格' },
+                { url : 'contentfolder/chapter1/chapter1-2.html', title : '验证用户是否输入' },
+                { url : 'contentfolder/chapter1/chapter1-3.html', title : '仿微博提示可输入剩余字数' },
+                { url : 'contentfolder/chapter1/chapter1-4.html', title : '换行文本自动滚动' },
+            ],
+
+             [
+                { title : '常用图片相关代码'},
+                { url : 'contentfolder/chapter2/chapter2-1.html', title : '图片滚动' }
+            ],
+
+        ];
+
+        var str = '';
+          for(var i = 0; i < data.length; i++){
+            var items = data[i];
+            var sub = '';
+            for(var j=0; j<items.length; j++){
+                var son = items[j];
+                if(j == 0){
+                    sub += '<li><h2><a href="javascript:;" title="' + son.title + '">' + son.title + '</a></h2><dl class="sub-dl">';
+                } else {
+                    sub += '<dd><a href="' + son.url + '" target="_blank" title="' + son.title + '">' + son.title + '</a></dd>';
+                }
+                if(j == items.length - 1){
+                    sub += '</dl></li>';
+                }
+            } 
+            str += sub;
+        }
+
+        var ol = $('.catlog-list');
+        ol.html(str);
+        var toggleLinks = $('.catlog-list h2 a');
+        toggleLinks.click(function(ele){
+          $(ele.target).parent().next().toggle();
+        })
+      </script>
+
+
+      <div class="footer">
+        <p>♥ from colorlight</p>
+      </div>
+    </div>
+   
+    <!-- build:js scripts/plugins.js -->
+
+
+  </body>
+</html>

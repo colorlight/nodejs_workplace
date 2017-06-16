@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>段落文本文字自动滚动</title>
+	<link rel="stylesheet" href="chapter1-4.css">
+    <link rel="stylesheet" href="reset.css">
+</head>
+<body>
+	<div class="demo1">
+    <h2>成都---赵雷</h2>
+    <div id="roll" data-rwidth="100" data-rheight="100" class="roll">
+        <ul id="ul" class="list" style="">
+            <li>让我掉下眼泪的 不止昨夜的酒</li> 
+            <li>让我依依不舍的 不止你的温柔</li>
+            <li>余路还要走多久 你攥着我的手</li>
+            <li>让我感到为难的 是挣扎的自由</li>
+            <li>分别总是在九月 回忆是思念的愁</li>
+            <li>深秋嫩绿的垂柳 亲吻着我额头</li>
+            <li>在那座阴雨的小城里 我从未忘记你</li>
+            <li>你会挽着我的衣袖 我会把手揣进裤兜</li>
+            <li>走到玉林路的尽头 走过小酒馆的门口</li>  
+        </ul>
+    </div>
+</div>
+<script>
+    (function(){
+        var ul = document.getElementById('ul');
+        var li = ul.getElementsByTagName('li');
+        var len = li.length;
+
+        function auto(){
+            act(ul, 'marginTop', -20, function(){
+                ul.appendChild(ul.children[0]);
+                ul.style.marginTop = 0;
+                setTimeout(function(){
+                    auto();
+                }, 800);
+            });
+        }
+        auto();
+
+        function css(obj, attr){
+			return getComputedStyle(obj, null)[attr];
+        }
+        function act(obj, attr, target, fn){
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function(){
+                var cur = parseInt(css(obj, attr));
+                var speed = (target - cur) / 8;
+                var stop = true;
+                speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+                if(target != cur){
+                    stop = false;
+                }
+                obj.style[attr] = speed + cur + 'px';
+                if(stop){
+                    clearInterval(obj.timer);
+                    obj.timer = null;
+                    fn && fn.call(obj);
+                }
+            }, 20);
+        }
+    }());
+</script>
+</body>
+</html>

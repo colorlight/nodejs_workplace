@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片轮换</title>
+	<link rel="shortcut icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
+	<!-- bower:js -->
+	<script src="/bower_components/jquery/dist/jquery.js"></script>
+	<!-- endbower -->
+
+    <link rel="stylesheet" href="/styles/picturn.css">
+
+</head>
+<body>
+	
+	<div class="slide-container">
+		<ol class="little-circle">
+			<li class="circle-active">小圆圈d</li>
+			<li>小圆圈sdf</li>
+			<li>小圆圈1</li>
+		</ol>
+		<div class="carousel-inner">
+			<div class="item active" style="background: red">1</div>
+			<div class="item" style="background: green">2</div>
+			<div class="item" style="background: yellow">3</div>
+			
+		</div>
+		<script>
+			var colors = ['red','blue', 'yellow','black'];
+			$('.carousel-inner div').slice(3).each(function(index,ele){
+				$(ele).css('backgroundColor',colors[index % 4]);
+				$(ele).addClass('item ');
+			})
+
+		</script>
+		<a href="javascript:void(0);" class="left carousel-control">leftarrow</a>
+		<a href="javascript:void(0);" class="right carousel-control">rightarrow</a>
+	</div>
+	<script>
+		var globalIndex = 0;
+		var listNum = $('.carousel-inner').children().length;
+		$('.left.carousel-control').click(ele =>{
+			var lastIndex =  (globalIndex--) % listNum;
+			var currIndex = (globalIndex) % listNum;
+			
+			var $currEle = $('.carousel-inner div:eq(' + currIndex + ')');
+		    var $lastEle =  $('.carousel-inner div:eq(' + lastIndex + ')');
+	
+			$currEle.addClass('left-to-center active');
+			$lastEle.addClass('center-to-right');
+
+			$lastEle.get(0).offsetWidth;
+			$currEle.on('webkitAnimationEnd',function(){
+				$lastEle.attr( "class", "item" );
+				$currEle.removeClass("left-to-center");
+				
+			})
+
+
+			$('.little-circle li:eq(' + lastIndex + ')').removeClass('circle-active');
+			$('.little-circle li:eq(' + currIndex + ')').addClass('circle-active');
+
+		})
+
+
+		
+		$('.right.carousel-control').click(ele =>{
+			var lastIndex =  (globalIndex++) % listNum;
+			var currIndex = (globalIndex) % listNum;
+		
+			// //去掉上上一个元素的prev
+			// $('.carousel-inner div:eq(' + lastlastIndex + ')').removeClass('prev');
+
+			// // 上一个元素去掉active，并添加prev
+			// $('.carousel-inner div:eq(' + lastIndex + ')').removeClass('active');
+			// $('.carousel-inner div:eq(' + lastIndex + ')').addClass('prev');
+			
+		 //    // 去掉当前的next class给当前元素添加 active
+			// $('.carousel-inner div:eq(' + currIndex + ')').addClass('active');
+			// $('.carousel-inner div:eq(' + currIndex + ')').removeClass('next');
+
+			// // 给下一个元素添加next class
+			// $('.carousel-inner div:eq(' + nextIndex + ')').addClass('next');
+
+
+			$('.little-circle li:eq(' + lastIndex + ')').removeClass('circle-active');
+			$('.little-circle li:eq(' + currIndex + ')').addClass('circle-active');
+
+			var $currEle = $('.carousel-inner div:eq(' + currIndex + ')');
+		    var $lastEle =  $('.carousel-inner div:eq(' + lastIndex + ')');
+	
+			$currEle.addClass('right-to-center active');
+			$lastEle.addClass('center-to-left');
+			$currEle.on('webkitAnimationEnd',function(){
+				$lastEle.get(0).className = "item";
+				$currEle.get(0).classList.remove("right-to-center");
+				
+			})
+
+		})
+	</script>
+</body>
+</html>
+
