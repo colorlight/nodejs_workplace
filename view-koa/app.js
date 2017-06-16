@@ -53,5 +53,6 @@ var options = {
 
 
 https.createServer( options, app.callback()).listen(443);
-
+app.listen(80);
 console.log('app started at port 443');
+console.log('app started at port 80');

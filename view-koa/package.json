@@ -11,11 +11,11 @@
         "async",
         "nunjucks"
     ],
-    "author": "Michael Liao",
+    "author": "colorlight",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/michaelliao/learn-javascript.git"
+        "url": "https://github.com/colorlight/nodejs_workplace.git"
     },
     "dependencies": {
         "koa": "2.0.0",
