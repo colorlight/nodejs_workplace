@@ -59,8 +59,6 @@ var options = {
     cert: fs.readFileSync('/root/https_ca/214090097510805.pem')
 }
 
-http.createServer(app.callback()).listen(80);
 https.createServer( options, app.callback()).listen(443);
 
 console.log('app started at port 443');
-console.log('app started at port 80');
